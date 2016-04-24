@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0" />
+
+		<script src="Scripts/angular.min.js"></script>
+		<script src="Scripts/angular-route.js"></script>
+		<script src="Scripts/angular-resource.js"></script>
+		<script src="Scripts/angular-ui-router.min.js"></script>
+	</head>
+	<body>
+
+		<h1>Test title</h1>
+		<p>{{5+5}}</p>
+
+		<div ui-view="root"></div> 
+
+		<script src="app.js"></script>
+		<script src="modules/main/main-controller.js"></script>
+	</body>
+</html>
