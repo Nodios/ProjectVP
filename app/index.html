@@ -2,21 +2,31 @@
 <html ng-app="app">
 	<head>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    	<title>ProjectVP</title>
 
 		<script src="Scripts/angular.min.js"></script>
 		<script src="Scripts/angular-route.js"></script>
 		<script src="Scripts/angular-resource.js"></script>
 		<script src="Scripts/angular-ui-router.min.js"></script>
+		<script src="Scripts/d3.min.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 	</head>
-	<body>
+	<body ng-cloak>
 
 		<h1>Test title</h1>
 		<p>{{5+5}}</p>
 
-		<div ui-view="root"></div> 
+		<div ui-view="root"></div>
 
 		<script src="app.js"></script>
 		<script src="modules/main/main-controller.js"></script>
+		<script src="modules/earthquakes/earthquake-controller.js"></script>
+		<script src="modules/earthquakes/earthquake-factory.js"></script>
+		<script src="modules/d3/d3-module.js"></script>
+		<script src="modules/d3/d3-factory.js"></script>
+		<script src="modules/d3/bar-chart-directive.js"></script>
+		<script src="modules/google-map/googlemap-module.js"></script>
+		<script src="modules/google-map/googlemap-directive.js"></script>
 	</body>
 </html>

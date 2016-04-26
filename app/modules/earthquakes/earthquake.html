@@ -1,0 +1,14 @@
+<div>
+	<h3>{{title}}</h3>
+	<p >Recieve status: {{status}}</p>
+
+	<p>Number of earthquakes in last hour: {{count}}</p>
+
+	<p>Loaded: {{hasLoadedData}}</p>
+
+	<google-map mapData="{{url}}" style="width:60%;height:500px;" ng-if="hasLoadedData"></google-map>
+
+	<bar-chart-directive data="earthquakes" ng-if="hasLoadedData"></bar-chart-directive>
+
+	<a ui-sref="root" ui-sref-opts="{reload: true}"> Back</a>
+</div>

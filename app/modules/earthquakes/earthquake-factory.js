@@ -2,13 +2,16 @@
     'use strict';
 
     angular
-        .module('main')
-        .factory('EarthQuakeFactory', EarthQuakeFactory);
+        .module('app')
+        .factory('EarthquakeFactory', EarthquakeFactory);
 
-    EarthQuakeFactory.$inject = ['ngResource'];
+    EarthquakeFactory.$inject = ['$http'];
 
     /* @ngInject */
-    function EarthQuakeFactory() {
+    function EarthquakeFactory($http) {
+        var self = this;
+        var test;
+
         var service = {
             getEarthquakes: getEarthquakes
         };
@@ -16,8 +19,14 @@
 
         ////////////////
 
-        function getEarthquakes() {
-
+        function getEarthquakes(){
+            return $http.get('http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson')
+                        .success(function(response){
+                            return response
+                        })
+                        .error(function(err){
+                            //TODO error handle
+                        });
         }
     }
 })();

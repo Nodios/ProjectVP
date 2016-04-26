@@ -1,7 +1,13 @@
 (function() {
     'use strict';
 
-    var app = angular.module('app', ['ngResource', 'ngRoute', 'ui.router']);
+    var app = angular.module('app', [
+    	'ngResource', 
+    	'ngRoute', 
+    	'ui.router',
+    	'd3',
+    	'googlemap'
+    ]);
 
     app.config(config);
 
@@ -31,6 +37,15 @@
 					'root': {
 						templateUrl: 'modules/main/main.html',
 						controller: 'MainController'
+					}
+				}
+			})
+			.state('earthquakes', {
+				url: '/earthquakes',
+				views: {
+					'root':{
+						templateUrl: 'modules/earthquakes/earthquake.html',
+						controller: 'EarthquakeController'
 					}
 				}
 			});
