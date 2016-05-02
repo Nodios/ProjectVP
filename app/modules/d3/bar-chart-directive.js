@@ -14,7 +14,6 @@
         	scope:{ //create isolated scope
 				data: "=", //this is same as @data - = defines two way binding
         	},
-        	//templateUrl: '',  //template of the directive can be added
         	link: link
         };
         return directive;
@@ -32,7 +31,14 @@
         		.style({
         			"background": "steelblue",
         			"color": "white",
-        			"width": function(d) {return d.properties.mag * 5 +"%";},
+        			"width": function(d) 
+                        {
+                            if(d.properties.mag >= 0){
+                                return d.properties.mag +"%";
+                            }else{
+                                return "0%";
+                            }
+                        },
         			"padding": "3px",
         			"margin": "3px",
         			"box-shadow": "2px 2px 2px #666"
