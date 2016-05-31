@@ -18,7 +18,8 @@
             getEarthquakesPastWeek: getEarthquakesPastWeek,
             getEarthquakesPastMonth: getEarthquakesPastMonth,
             getEarthquakeDetails: getEarthquakeDetails,
-            getNearbyCities: getNearbyCities
+            getNearbyCities: getNearbyCities,
+            getGeoserve: getGeoserve
         };
         return service;
 
@@ -72,6 +73,16 @@
         }
 
         function getNearbyCities(url){
+            return $http.get(url)
+                        .success(function(response){
+                            return response
+                        })
+                        .error(function(err){
+                            //TODO error handle
+                        })
+        }
+
+        function getGeoserve(url){
             return $http.get(url)
                         .success(function(response){
                             return response

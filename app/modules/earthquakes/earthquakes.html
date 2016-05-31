@@ -1,19 +1,37 @@
 <div>
-	<h3>{{title}}</h3>
-	<a ui-sref="root" ui-sref-opts="{reload: true}"> Back</a>
-	<button ng-click="getPastHour()"> Past Hour</button>
-	<button ng-click="getPastDay()"> Past Day</button>
-	<button ng-click="getPastWeek()"> Past Week</button>
-	<button ng-click="getPastMonth()" ng-disabled="true"> Past Month</button>
+	<div ng-show="viewDetail === true">
+		<div ui-view="earthquake-content"></div>
+	</div>
 
-	<p >Recieve status: {{status}}, Loaded: {{hasLoadedData}}</p>
+	<div ng-show="viewDetail !== true">
+		<h3>{{title}}</h3>
+		<!--<a ui-sref="root" ui-sref-opts="{reload: true}"> Back</a>-->
+		<button type="button" class="btn btn-default" ng-click="getPastHour()"> Past Hour</button>
+		<button type="button" class="btn btn-default" ng-click="getPastDay()"> Past Day</button>
+		<button type="button" class="btn btn-default" ng-click="getPastWeek()"> Past Week</button>
+		<button type="button" class="btn btn-default" ng-click="getPastMonth()" ng-disabled="true"> Past Month</button>
 
-	<p>Number of earthquakes in last hour: {{count}}</p>
+		<div ng-if="status === 200">
+			<p class="text-success">Recieve status: {{status}}</p>
+		</div>
+		<div ng-if="status !== 200">
+			<p class="text-danger">Recieve status: {{status}}</p>
+		</div>
+		<div ng-if="hasLoadedData === true">
+			<p class="text-success">Loaded: {{hasLoadedData}}</p>
+		</div>
+		<div ng-if="hasLoadedData !== true">
+			<p class="text-danger">Loaded: {{hasLoadedData}}</p>
+		</div>
+		
 
-	<p>{{earthquakeData | json}}</p>
+		<p>Number of earthquakes in last hour: {{count}}</p>
 
-	<google-map mapData="{{url}}" earthquakeData="earthquakeData" zoom="2" lat="0" lng="0" style="width:100%;height:500px;" ng-if="hasLoadedData"></google-map>
+		<p>{{earthquakeData | json}}</p>
 
-	<normal-chart-directive data="earthquakes" ng-if="hasLoadedData && loadGraph" ></normal-chart-directive>
-	<p ng-if="!loadGraph">Graph disabled because of large quantities of data.</p>
+		<google-map mapData="{{url}}" earthquakeData="earthquakeData" zoom="2" lat="0" lng="0" style="width:100%;height:500px;" ng-if="hasLoadedData"></google-map>
+
+		<normal-chart-directive data="earthquakes" ng-if="hasLoadedData && loadGraph"></normal-chart-directive>
+		<p ng-if="!loadGraph">Graph disabled because of large quantities of data.</p>
+	</div>
 </div>

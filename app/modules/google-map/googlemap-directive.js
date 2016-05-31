@@ -103,8 +103,9 @@
 
             function getData(event){
                 //Here is clicked marker data
+                angular.element(document.querySelector('#tip')).remove();
                 var data = event.feature[Object.keys(event.feature)[2]];
-                $state.go('earthquake', {earthquakeUrl: data.detail});
+                $state.go('root.earthquakes.earthquake', {earthquakeUrl: data.detail});
             }
 
             function createGMapCityMarker(city, gMap){

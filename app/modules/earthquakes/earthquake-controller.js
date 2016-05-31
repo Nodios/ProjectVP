@@ -15,6 +15,8 @@
     	var earthquakeUrl = $stateParams.earthquakeUrl;
     	var data = null;
 
+      $scope.goBack = goBack;
+
     	$scope.hasLoadedData = false;
 
       (activate());
@@ -24,17 +26,25 @@
       function activate() {
       	data = EarthquakeFactory.getEarthquakeDetails(earthquakeUrl);
       	data.then(function(result) {
+            angular.element(document.querySelector('#tip')).remove();
              // display data when avaliable
-             var nearbyCitiesUrl = result.data.properties.products["nearby-cities"][0].contents["nearby-cities.json"].url;
+            var nearbyCitiesUrl = result.data.properties.products["nearby-cities"][0].contents["nearby-cities.json"].url;
+            var geoserve = result.data.properties.products["geoserve"][0].contents["geoserve.json"].url;
 
-             $scope.resultData = result;             
-             $scope.lng = result.data.geometry.coordinates[0];
-             $scope.lat = result.data.geometry.coordinates[1];
-             $scope.tsunamiChance = result.data.properties.tsunami;
+            var resultData = result.data;             
+            $scope.lng = resultData.geometry.coordinates[0];
+            $scope.lat = resultData.geometry.coordinates[1];
 
-             nearbyCities(nearbyCitiesUrl);
+            $scope.depth = result.data.properties.products["phase-data"][0].properties.depth;
+            $scope.tsunamiChance = resultData.properties.tsunami;
+            $scope.magnitude = resultData.properties.mag;
+            $scope.place = resultData.properties.place;
+            $scope.time = new Date(resultData.properties.time);
+            $scope.updateTime = new Date(resultData.properties.updated);
 
-             
+            nearbyCities(nearbyCitiesUrl);
+            getGeoserve(geoserve);
+
           });
       }
 
@@ -42,9 +52,23 @@
         data = EarthquakeFactory.getNearbyCities(url);
           data.then(function(result) {
             $scope.nearbyCitiesData = result.data;
-            $scope.hasLoadedData = true;
+            
           });
       }
+
+      function getGeoserve(url){
+        data = EarthquakeFactory.getGeoserve(url);
+        data.then(function(result){
+          var data = result.data;
+          $scope.country = data.region.country;
+          $scope.region = data.region.state;
+          $scope.tectonicSummary = data.tectonicSummary.text;
+          $scope.hasLoadedData = true;
+        });
+      }
       
+      function goBack() {
+          $state.go('^');
+      }
     }
 })();

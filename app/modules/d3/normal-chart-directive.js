@@ -100,7 +100,8 @@
                 .on('click', getData);
 
             function getData(event){
-                $state.go('earthquake', {earthquakeUrl: event.properties.detail});
+                angular.element(document.querySelector('#tip')).remove();
+                $state.go('root.earthquakes.earthquake', {earthquakeUrl: event.properties.detail});
             }
         }
 

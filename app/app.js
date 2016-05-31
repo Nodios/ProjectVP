@@ -3,9 +3,11 @@
 
     var app = angular.module('app', [
     	'ngResource', 
-    	'ngRoute', 
+    	'ngRoute',
+    	'ngSanitize',
     	'ui.router',
     	'd3',
+    	'significant',
     	'earthquake',
     	'googlemap'
     ]);
@@ -41,25 +43,35 @@
 					}
 				}
 			})
-			.state('earthquakes', {
+			.state('root.earthquakes', {
 				url: '/earthquakes',
 				views: {
-					'root':{
+					'main-content@root':{
 						templateUrl: 'modules/earthquakes/earthquakes.html',
 						controller: 'EarthquakesController'
 					}
 				}
 			})
-			.state('earthquake', {
+			.state('root.earthquakes.earthquake', {
 				url: '/earthquake',
 				views: {
-					'root':{
+					'main-content@root':{
 						templateUrl: 'modules/earthquakes/earthquake.html',
 						controller: 'EarthquakeController'
 					}
 				},
 				params: { earthquakeUrl: undefined }
-			});
+			})
+			.state('root.significant',{
+				url: '/significant',
+				views:{
+					'main-content@root':{
+						templateUrl: 'modules/significant/significant.html',
+						controller: 'SignificantController'
+					}
+				}
+			})
+			;
 	}
 
 	app.run(function ($state) {

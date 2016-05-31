@@ -11,6 +11,9 @@
     function EarthquakesController($scope, $state, EarthquakeFactory) {
         var self = this;
 
+        $scope.viewDetail = false;
+        $scope.toggleVisible = toggleVisible;
+
         $scope.getPastHour = getPastHour;
         $scope.getPastDay = getPastDay;
         $scope.getPastWeek = getPastWeek;
@@ -100,6 +103,10 @@
                $scope.hasLoadedData = true;
                $scope.loadGraph = true;
             });
+        }
+
+        function toggleVisible() {
+          $scope.viewDetail = !$scope.viewDetail;
         }
     }
 })();
