@@ -16,8 +16,9 @@
             getEarthquakesPastHour: getEarthquakesPastHour,
             getEarthquakesPastDay: getEarthquakesPastDay,
             getEarthquakesPastWeek: getEarthquakesPastWeek,
-            getEarthquakesPastMonth: getEarthquakesPastMonth
-
+            getEarthquakesPastMonth: getEarthquakesPastMonth,
+            getEarthquakeDetails: getEarthquakeDetails,
+            getNearbyCities: getNearbyCities
         };
         return service;
 
@@ -58,6 +59,26 @@
                         .error(function(err){
                             //TODO error handle
                         });
+        }
+
+        function getEarthquakeDetails(url){
+            return $http.get(url)
+                        .success(function(response){
+                            return response;
+                        })
+                        .error(function(err){
+                            //TODO error handle
+                        });
+        }
+
+        function getNearbyCities(url){
+            return $http.get(url)
+                        .success(function(response){
+                            return response
+                        })
+                        .error(function(err){
+                            //TODO error handle
+                        })
         }
     }
 })();

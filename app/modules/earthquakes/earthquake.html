@@ -1,20 +1,7 @@
 <div>
-	<h3>{{title}}</h3>
-	<a ui-sref="root" ui-sref-opts="{reload: true}"> Back</a>
-	<button ng-click="getPastHour()"> Past Hour</button>
-	<button ng-click="getPastDay()"> Past Day</button>
-	<button ng-click="getPastWeek()"> Past Week</button>
-	<button ng-click="getPastMonth()" ng-disabled="true"> Past Month</button>
+	<p>This is AngularJS test: 5+5 = {{5+5}}</p>
 
-	<p >Recieve status: {{status}}, Loaded: {{hasLoadedData}}</p>
+	<google-map mapData="null" earthquakeData="earthquakeData" zoom="7" lat="{{lat}}" lng="{{lng}}" cities="nearbyCitiesData" style="width:100%;height:500px;" ng-if="hasLoadedData"></google-map>
 
-	<p>Number of earthquakes in last hour: {{count}}</p>
-
-	<p>{{earthquakeData | json}}</p>
-
-	<google-map mapData="{{url}}" earthquakeData="earthquakeData" style="width:100%;height:500px;" ng-if="hasLoadedData"></google-map>
-
-	<normal-chart-directive data="earthquakes" ng-if="hasLoadedData && loadGraph" ></normal-chart-directive>
-
-	
+	<p>{{resultData | json}}</p>
 </div>

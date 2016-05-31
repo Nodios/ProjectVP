@@ -5,9 +5,9 @@
         .module('d3')
         .directive('normalChartDirective', normalChartDirective); //will be named <bar-chart-directive>
 
-    normalChartDirective.$inject = [];
+    normalChartDirective.$inject = ['$state'];
 
-    function normalChartDirective() {
+    function normalChartDirective($state) {
         var directive = {
         	restricted: 'E', //use directive as an element
         	replace: false,
@@ -22,7 +22,7 @@
         	var chart = d3.select(element[0]);
 
             var margin = {top: 20, right: 20, bottom: 70, left: 40},
-                width = 1000 - margin.left - margin.right,
+                width = 1500 - margin.left - margin.right,
                 height = 500 - margin.top - margin.bottom;
 
             var placesArray = [];
@@ -42,6 +42,7 @@
             var yAxis = d3.svg.axis().scale(y).orient("left").ticks(4);
 
             var tip = d3.tip()
+                .attr("id", "tip")
                 .attr('class', 'd3-tip')
                 .offset([-10, 0])
                 .html(function(d) {
@@ -52,7 +53,7 @@
             var svg = chart
                 .append("svg")
                 .attr("width", "100%")
-                .attr("height", height + margin.top + margin.bottom)
+                .attr("height", height + margin.top + margin.bottom+200)
                 .append("g")
                 .attr("transform","translate(" + margin.left + "," + margin.top + ")");
 
@@ -95,8 +96,15 @@
                     return color(i)
                 })
                 .on('mouseover', tip.show)
-                .on('mouseout', tip.hide);
+                .on('mouseout', tip.hide)
+                .on('click', getData);
+
+            function getData(event){
+                $state.go('earthquake', {earthquakeUrl: event.properties.detail});
+            }
         }
+
+
 
 	}
 

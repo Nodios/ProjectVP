@@ -6,6 +6,7 @@
     	'ngRoute', 
     	'ui.router',
     	'd3',
+    	'earthquake',
     	'googlemap'
     ]);
 
@@ -44,10 +45,20 @@
 				url: '/earthquakes',
 				views: {
 					'root':{
+						templateUrl: 'modules/earthquakes/earthquakes.html',
+						controller: 'EarthquakesController'
+					}
+				}
+			})
+			.state('earthquake', {
+				url: '/earthquake',
+				views: {
+					'root':{
 						templateUrl: 'modules/earthquakes/earthquake.html',
 						controller: 'EarthquakeController'
 					}
-				}
+				},
+				params: { earthquakeUrl: undefined }
 			});
 	}
 

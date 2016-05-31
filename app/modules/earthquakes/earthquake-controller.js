@@ -2,104 +2,49 @@
     'use strict';
 
     angular
-        .module('app')
+        .module('earthquake')
         .controller('EarthquakeController', EarthquakeController);
 
-    EarthquakeController.$inject = ['$scope', '$state', 'EarthquakeFactory'];
+    EarthquakeController.$inject = ['$scope','$state', '$stateParams', 'EarthquakeFactory'];
 
+    /* @ngInject */
+    function EarthquakeController($scope, $state, $stateParams, EarthquakeFactory) {
+    	var self = this;
+      angular.element(document.querySelector('#tip')).remove();
 
-    function EarthquakeController($scope, $state, EarthquakeFactory) {
-        var self = this;
+    	var earthquakeUrl = $stateParams.earthquakeUrl;
+    	var data = null;
 
-        $scope.getPastHour = getPastHour;
-        $scope.getPastDay = getPastDay;
-        $scope.getPastWeek = getPastWeek;
-        $scope.getPastMonth = getPastMonth;
+    	$scope.hasLoadedData = false;
 
-        $scope.hasLoadedData = false;
-        $scope.loadGraph = true;
-        $scope.earthquakeData;
+      (activate());
 
-        var data = EarthquakeFactory.getEarthquakesPastHour();
-        data.then(function(result) {
-           // display data when avaliable
-           $scope.status = result.data.metadata.status;
-           $scope.title = result.data.metadata.title;
-           $scope.count = result.data.metadata.count;
+      ////////////////
 
-           $scope.earthquakes = result.data.features;
-           $scope.url = result.data.metadata.url;
+      function activate() {
+      	data = EarthquakeFactory.getEarthquakeDetails(earthquakeUrl);
+      	data.then(function(result) {
+             // display data when avaliable
+             var nearbyCitiesUrl = result.data.properties.products["nearby-cities"][0].contents["nearby-cities.json"].url;
 
-           $scope.hasLoadedData = true;
-           $scope.loadGraph = true;
-        });
+             $scope.resultData = result;             
+             $scope.lng = result.data.geometry.coordinates[0];
+             $scope.lat = result.data.geometry.coordinates[1];
+             $scope.tsunamiChance = result.data.properties.tsunami;
 
-        function getPastHour(){
-            $scope.hasLoadedData = false;
-            data = EarthquakeFactory.getEarthquakesPastHour();
-            data.then(function(result) {
-               // display data when avaliable
-               $scope.status = result.data.metadata.status;
-               $scope.title = result.data.metadata.title;
-               $scope.count = result.data.metadata.count;
+             nearbyCities(nearbyCitiesUrl);
 
-               $scope.earthquakes = result.data.features;
-               $scope.url = result.data.metadata.url;
+             
+          });
+      }
 
-               $scope.hasLoadedData = true;
-               $scope.loadGraph = true;
-            });
-        }
-
-        function getPastDay(){
-            $scope.hasLoadedData = false;
-            data = EarthquakeFactory.getEarthquakesPastDay();
-            data.then(function(result) {
-               // display data when avaliable
-               $scope.status = result.data.metadata.status;
-               $scope.title = result.data.metadata.title;
-               $scope.count = result.data.metadata.count;
-
-               $scope.earthquakes = result.data.features;
-               $scope.url = result.data.metadata.url;
-
-               $scope.hasLoadedData = true;
-               $scope.loadGraph = true;
-            });
-        }
-
-        function getPastWeek(){
-            $scope.hasLoadedData = false;
-            data = EarthquakeFactory.getEarthquakesPastWeek();
-            data.then(function(result) {
-               // display data when avaliable
-               $scope.status = result.data.metadata.status;
-               $scope.title = result.data.metadata.title;
-               $scope.count = result.data.metadata.count;
-
-               $scope.earthquakes = result.data.features;
-               $scope.url = result.data.metadata.url;
-
-               $scope.hasLoadedData = true;
-               $scope.loadGraph = false;
-            });
-        }
-
-        function getPastMonth(){
-            $scope.hasLoadedData = false;
-            data = EarthquakeFactory.getEarthquakesPastMonth();
-            data.then(function(result) {
-               // display data when avaliable
-               $scope.status = result.data.metadata.status;
-               $scope.title = result.data.metadata.title;
-               $scope.count = result.data.metadata.count;
-
-               $scope.earthquakes = result.data.features;
-               $scope.url = result.data.metadata.url;
-
-               $scope.hasLoadedData = true;
-               $scope.loadGraph = true;
-            });
-        }
+      function nearbyCities(url){
+        data = EarthquakeFactory.getNearbyCities(url);
+          data.then(function(result) {
+            $scope.nearbyCitiesData = result.data;
+            $scope.hasLoadedData = true;
+          });
+      }
+      
     }
 })();

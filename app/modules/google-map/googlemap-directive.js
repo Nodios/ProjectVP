@@ -5,14 +5,18 @@
         .module('googlemap')
         .directive('googleMap', GoogleMap);
 
-    GoogleMap.$inject = [];
+    GoogleMap.$inject = ['$state'];
 
-    function GoogleMap() {    	
+    function GoogleMap($state) {    	
         var directive = {
         	restricted: 'E', //use directive as an element
         	replace: true,
         	scope: {
-        		mapData: "@", //geojson url goes here
+        		mapData: "=", //geojson url goes here
+                zoom: "@",
+                lat: "@",
+                lng: "@",
+                cities: "=",
                 earthquakeData: "="
         	},
         	template: '<div id="map"></div>',
@@ -22,8 +26,11 @@
 
         function link(scope, element, attrs) {
 
+            var x = parseFloat(attrs.lat);
+            var y = parseFloat(attrs.lng);
+
         	var options = {
-        		zoom: 2,
+        		zoom: parseInt(attrs.zoom),
                 scrollwheel: false,
                 scaleControl: false,
                 streetViewControl: false,
@@ -34,8 +41,32 @@
         	};
 
         	var map = new google.maps.Map(document.getElementById('map'), options);
+            map.setCenter(new google.maps.LatLng(x,y));
+
+            //add earthquake marker
+            if(x != 0 || y != 0){
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(x,y),
+                    icon: {
+                        path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+                        scale: 5,
+                        strokeWeight:2,
+                        strokeColor:"#B40404"
+                    }
+                });
+                marker.setMap(map);
+            }
+
+            //add nearby cities markers
+            var cities = scope.cities;
+            for(var city in cities){
+                createGMapCityMarker(cities[city], map);
+            }
+
             map.data.setStyle(styleFeature);
-        	map.data.loadGeoJson(attrs.mapdata);
+            if(attrs.mapdata != "null"){
+        	   map.data.loadGeoJson(attrs.mapdata);
+            }
 
             map.data.addListener('click', getData);
 
@@ -73,7 +104,29 @@
             function getData(event){
                 //Here is clicked marker data
                 var data = event.feature[Object.keys(event.feature)[2]];
-                scope.earthquakeData = data;
+                $state.go('earthquake', {earthquakeUrl: data.detail});
+            }
+
+            function createGMapCityMarker(city, gMap){
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(city.latitude, city.longitude),
+                    title: city.name
+                });
+                marker.setMap(gMap);
+
+                var cityDetails = '<p>City name: </p><strong>' + city.name + '</strong> <br>' +
+                    '<p>Direction from earthquake: </p><strong>' + city.direction + '</strong> <br>' +
+                    '<p>Distance from earthquake: </p><strong>' + city.distance + 'km</strong> <br>' +
+                    '<p>City population: </p><strong>' + city.population + '</strong> ' +
+                    '<p>If population is 1, real population is unknown.</p>'
+
+                var infoWindow = new google.maps.InfoWindow({
+                    content: cityDetails
+                });
+
+                marker.addListener('click',function(){
+                    infoWindow.open(gMap, marker);
+                })
             }
         }
     }

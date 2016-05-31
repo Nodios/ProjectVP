@@ -1,0 +1,19 @@
+<div>
+	<h3>{{title}}</h3>
+	<a ui-sref="root" ui-sref-opts="{reload: true}"> Back</a>
+	<button ng-click="getPastHour()"> Past Hour</button>
+	<button ng-click="getPastDay()"> Past Day</button>
+	<button ng-click="getPastWeek()"> Past Week</button>
+	<button ng-click="getPastMonth()" ng-disabled="true"> Past Month</button>
+
+	<p >Recieve status: {{status}}, Loaded: {{hasLoadedData}}</p>
+
+	<p>Number of earthquakes in last hour: {{count}}</p>
+
+	<p>{{earthquakeData | json}}</p>
+
+	<google-map mapData="{{url}}" earthquakeData="earthquakeData" zoom="2" lat="0" lng="0" style="width:100%;height:500px;" ng-if="hasLoadedData"></google-map>
+
+	<normal-chart-directive data="earthquakes" ng-if="hasLoadedData && loadGraph" ></normal-chart-directive>
+	<p ng-if="!loadGraph">Graph disabled because of large quantities of data.</p>
+</div>
