@@ -90,7 +90,12 @@
                 })
                 .attr("width", barWidth)
                 .attr("height", function(d) {
-                    return height - y(d.properties.mag); 
+                    if((height - y(d.properties.mag)) < 0){
+                        return 0;
+                    }
+                    else{
+                        return height - y(d.properties.mag); 
+                    }
                 })
                 .attr("fill",function(d,i){
                     return color(i)

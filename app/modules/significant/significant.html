@@ -1,12 +1,28 @@
 <div>
-	AngularJS test 5+5 = {{5+5}}
-
-	{{test}}
-
-	<div ng-repeat="eq in eqArray">
-		<p>Location: {{eq.properties.place}}</p>
-		<p>Magnitude: {{eq.properties.mag}}</p>
-		<p>Felt {{eq.properties.felt}}km away</p>
-		<p>Tsunami: {{eq.properties.tsunami}}</p>
+	<div class="row">
+		<div class="col-lg-6">
+			<p><strong># of earthquakes with magnitude >6: </strong> {{eqArray.length}}</p>
+			<hr>
+			<div ng-repeat="eq in eqArray">
+				<div class="well">
+					<p><strong>Location:</strong> {{eq.properties.place}}</p>
+					<p><strong>Magnitude:</strong> {{eq.properties.mag}}</p>
+					<p ng-if="eq.properties.tsunami > 0"><strong>Tsunami:</strong> Plausible</p>
+					<p ng-if="eq.properties.tsunami === 0"><strong>Tsunami:</strong> No threat</p>
+					<p><a href="{{eq.properties.url}}" target="_blank">See details</a></p>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<p><strong># of earthquakes with possible tsunami: </strong> {{eqWithTsunamiWarningArray.length}}</p>
+			<hr>
+			<div ng-repeat="ts in eqWithTsunamiWarningArray">
+				<div class="well">
+					<p><strong>Location:</strong> {{ts.properties.place}}</p>
+					<p><strong>Magnitude:</strong> {{ts.properties.mag}}</p>
+					<p><a href="{{ts.properties.url}}" target="_blank">See details</a></p>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

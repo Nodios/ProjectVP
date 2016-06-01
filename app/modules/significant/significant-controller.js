@@ -13,10 +13,9 @@
 
       var data = undefined;
       $scope.eqArray = [];
+      $scope.eqWithTsunamiWarningArray = [];
 
       $scope.hasLoadedData = false;
-
-
 
       getPastMonth();
 
@@ -26,9 +25,12 @@
             data.then(function(result) {
                // display data when avaliable
                for(var eq in result.data.features){
-                var data = result.data.features[eq];
+                  var data = result.data.features[eq];
                   if(data.properties.mag > 6){
                       $scope.eqArray.push(data);
+                  }
+                  if(data.properties.tsunami > 0){
+                    $scope.eqWithTsunamiWarningArray.push(data);
                   }
                }
 

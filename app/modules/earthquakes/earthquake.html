@@ -5,7 +5,7 @@
 
 	<div class="divider"></div>
 
-	<google-map mapData="null" earthquakeData="earthquakeData" zoom="7" lat="{{lat}}" lng="{{lng}}" cities="nearbyCitiesData" style="width:100%;height:500px;" ng-if="hasLoadedData"></google-map>
+	<google-map mapData="null" earthquakeData="null" zoom="7" lat="{{lat}}" lng="{{lng}}" cities="nearbyCitiesData" style="width:100%;height:500px;" ng-if="hasLoadedData"></google-map>
 
 	<div class="row">
 		<h3>Informations about the earthquake</h3>
@@ -14,10 +14,10 @@
 			<p>Magnitude: {{magnitude}}</p>
 			<p>Depth: {{depth}}km</p>
 			<div ng-if="tsunamiChance === 0">
-				<p>Chance of a tsunami: {{tsunamiChance}}</p>
+				<p>Chance of a tsunami: No threat</p>
 			</div>
 			<div ng-if="tsunamiChance !== 0">
-				<strong class="text-danger">Chance of a tsunami: {{tsunamiChance}}</strong>
+				<strong class="text-danger">Chance of a tsunami: Plausible</strong>
 			</div>
 		</div>
 		<div class="col-xs-6">
