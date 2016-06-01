@@ -8,16 +8,16 @@
 	<google-map mapData="null" earthquakeData="null" zoom="7" lat="{{lat}}" lng="{{lng}}" cities="nearbyCitiesData" style="width:100%;height:500px;" ng-if="hasLoadedData"></google-map>
 
 	<div class="row">
-		<h3>Informations about the earthquake</h3>
+		<h3>Information about the earthquake</h3>
 		<div class="col-xs-6">
 			<p>Location: {{place}}</p>
 			<p>Magnitude: {{magnitude}}</p>
 			<p>Depth: {{depth}}km</p>
 			<div ng-if="tsunamiChance === 0">
-				<p>Chance of a tsunami: No threat</p>
+				<p>Chance of a tsunami: <strong class="text-success">No threat</strong></p>
 			</div>
 			<div ng-if="tsunamiChance !== 0">
-				<strong class="text-danger">Chance of a tsunami: Plausible</strong>
+				<p>Chance of a tsunami: <strong class="text-danger">Plausible</strong></p>
 			</div>
 		</div>
 		<div class="col-xs-6">
@@ -26,7 +26,7 @@
 		</div>
 	</div>
 	<div class="row">
-	<h3>Informations about the area</h3>
+	<h3>Information about the area</h3>
 		<div class="col-xs-2">			
 			<p>Country: {{country}}</p>
 			<p>State: {{region}}</p>

@@ -42,7 +42,6 @@
                $scope.url = result.data.metadata.url;
 
                $scope.hasLoadedData = true;
-               $scope.loadGraph = true;
             });
         }
     }

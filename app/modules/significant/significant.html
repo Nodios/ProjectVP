@@ -1,4 +1,22 @@
 <div>
+	<h1>{{title}}</h1>
+	<div class="row">
+		<div class="col-lg-3 well">
+			<h3>Data response</h3>
+			<div ng-if="status === 200">
+				<p>Recieve status: <strong class="text-success">{{status}} OK</strong></p>
+			</div>
+			<div ng-if="status !== 200">
+				<p>Recieve status: <strong class="text-danger">{{status}}</strong></p>
+			</div>
+			<div ng-if="hasLoadedData === true">
+				<p>Loaded: <strong class="text-success">{{hasLoadedData}}</strong></p>
+			</div>
+			<div ng-if="hasLoadedData !== true">
+				<p>Loaded: <strong class="text-danger">{{hasLoadedData}}</strong></p>
+			</div>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-lg-6">
 			<p><strong># of earthquakes with magnitude >6: </strong> {{eqArray.length}}</p>

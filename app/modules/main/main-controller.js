@@ -11,8 +11,7 @@
     function MainController($scope, $state) {
         var self = this;
         
-        $scope.title = "Earthquake monitor and statistics";
-        $scope.message = "This is confirmation that this works";
+        $scope.title = "Earthquake monitor";
 
         activate();
 
