@@ -35,7 +35,13 @@
             $scope.lng = resultData.geometry.coordinates[0];
             $scope.lat = resultData.geometry.coordinates[1];
 
-            $scope.depth = result.data.properties.products["phase-data"][0].properties.depth;
+            //Get stupid depth
+            if(result.data.properties.products["phase-data"] !== undefined){
+              $scope.depth = result.data.properties.products["phase-data"][0].properties.depth;
+            }else{
+              $scope.depth = result.data.properties.products["origin"][0].properties.depth;
+            }
+
             $scope.tsunamiChance = resultData.properties.tsunami;
             $scope.magnitude = resultData.properties.mag;
             $scope.place = resultData.properties.place;
