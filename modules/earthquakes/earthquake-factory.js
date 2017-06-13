@@ -26,7 +26,7 @@
         ////////////////
 
         function getEarthquakesPastHour(){
-            return $http.get('http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson')
+            return $http.get('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson')
                         .success(function(response){
                             return response
                         })
@@ -35,7 +35,7 @@
                         });
         }
         function getEarthquakesPastDay(){
-            return $http.get('http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
+            return $http.get('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
                         .success(function(response){
                             return response
                         })
@@ -44,7 +44,7 @@
                         });
         }
         function getEarthquakesPastWeek(){
-            return $http.get('http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson')
+            return $http.get('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson')
                         .success(function(response){
                             return response
                         })
@@ -53,7 +53,7 @@
                         });
         }
         function getEarthquakesPastMonth(){
-            return $http.get('http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson')
+            return $http.get('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson')
                         .success(function(response){
                             return response
                         })
