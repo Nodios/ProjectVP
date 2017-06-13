@@ -28,8 +28,8 @@
 	<div class="row">
 	<h3>Information about the area</h3>
 		<div class="col-xs-2">			
-			<p>Country: {{country}}</p>
-			<p>State: {{region}}</p>
+			<p>Country: <span ng-if="country">{{country}}</span></p>
+			<p>State: <span ng-if="region">{{region}}</span></p>
 		</div>
 		<div ng-if="tectonicSummary !== undefined" class="col-xs-10">
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailsModal">Show details</button>
@@ -52,6 +52,7 @@
 	</div>
 	<div class="row">
 		<h3>Nearby cities affected by the earthquake</h3>
+		<div ng-if="!nearbyCitiesData">No data</div>
 		<div ng-repeat="city in nearbyCitiesData">
 			<div class="col-xs-2">
 				<p>Name: {{city.name}}</p>

@@ -27,8 +27,7 @@
       	data = EarthquakeFactory.getEarthquakeDetails(earthquakeUrl);
       	data.then(function(result) {
             angular.element(document.querySelector('#tip')).remove();
-             // display data when avaliable
-            var nearbyCitiesUrl = result.data.properties.products["nearby-cities"][0].contents["nearby-cities.json"].url;
+            // display data when avaliable
             var geoserve = result.data.properties.products["geoserve"][0].contents["geoserve.json"].url;
 
             var resultData = result.data;             
@@ -48,7 +47,11 @@
             $scope.time = new Date(resultData.properties.time);
             $scope.updateTime = new Date(resultData.properties.updated);
 
-            nearbyCities(nearbyCitiesUrl);
+            if(result.data.properties.products["nearby-cities"] != null)
+            {
+              var nearbyCitiesUrl = result.data.properties.products["nearby-cities"][0].contents["nearby-cities.json"].url;
+              nearbyCities(nearbyCitiesUrl);
+            }
             getGeoserve(geoserve);
 
           });
@@ -66,8 +69,9 @@
         data = EarthquakeFactory.getGeoserve(url);
         data.then(function(result){
           var data = result.data;
-          $scope.country = data.region.country;
-          $scope.region = data.region.state;
+		  $scope.nearbyCitiesData = data.cities;
+          $scope.country = data.region.country || "No data";
+          $scope.region = data.region.state || "No data";
           $scope.tectonicSummary = data.tectonicSummary.text;
           $scope.hasLoadedData = true;
         });
